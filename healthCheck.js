@@ -19,6 +19,15 @@ const ipaddress = config.IP || "127.0.0.1";
 const endLine =
   "\n\n=====================================================================================================================\n";
 
+const puppeteerOptions = {
+  devtools: true,
+  headless: true,
+  args: ["--no-sandbox"]
+};
+if (config.MODE === "server") {
+  puppeteerOptions.executablePath = "/usr/bin/chromium-browser";
+}
+
 app.get("/", (req, res) => {
   let logOutput = `[ ${new Date().toLocaleString()} ]\n`;
   Promise.all(config.URLS.map((url) => checkUrl(url)))
@@ -47,10 +56,7 @@ function checkUrl(url) {
     try {
       console.log("URL", url);
       let output = `\nURL :\n${url.BASE_URL + url.PATH}\nBACKEND :`;
-      const browser = await puppeteer.launch({
-        devtools: true,
-        headless: true,
-      });
+      const browser = await puppeteer.launch(puppeteerOptions);
       const page = await browser.newPage();
 
       page
