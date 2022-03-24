@@ -1,0 +1,22 @@
+{
+  "IP": "127.0.0.1",
+  "PORT": 9000,
+  "OUTPUT_FILE_NAME": "output",
+  "URLS": [
+    {
+      "BASE_URL": "https://myhappynation.in/calculators",
+      "PATH": "/fullpage/souvik/my-samsung-care-plan/",
+      "BOT_HEALTH_CHECK": true
+    },
+    {
+      "BASE_URL": "https://myhappynation.in/builder",
+      "PATH": "/",
+      "BOT_HEALTH_CHECK": true
+    },
+    {
+      "BASE_URL": "https://myhappynation.in/builderx",
+      "PATH": "/",
+      "BOT_HEALTH_CHECK": false
+    }
+  ]
+}
