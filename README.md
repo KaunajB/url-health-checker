@@ -7,7 +7,7 @@ Checks the health of all URLs provided in config.json by logging
 
 ## Installation
 
-Requires [Node.js](https://nodejs.org/) and [Chromium-browser] to run.
+Requires [Node.js](https://nodejs.org/) and [Chromium-browser](https://download-chromium.appspot.com/) to run.
 
 Install the dependencies and start the server.
 
