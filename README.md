@@ -24,3 +24,7 @@ cd url-health-checker
 npm i
 pm2 start healthCheck.js
 ```
+
+## Usage
+
+Start the server, open browser and go to the url: http://localhost:9000/
