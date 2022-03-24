@@ -7,11 +7,12 @@ Checks the health of all URLs provided in config.json by logging
 
 ## Installation
 
-Requires [Node.js](https://nodejs.org/) to run.
+Requires [Node.js](https://nodejs.org/) and [Chromium-browser] to run.
 
 Install the dependencies and start the server.
 
 ```sh
+git clone https://github.com/KaunajB/url-health-checker.git
 cd url-health-checker
 npm i
 ```
@@ -22,6 +23,7 @@ Make changes to config.json file.
 * IP: IP Address for starting the server
 * PORT: Port on which the server should listen
 * OUTPUT_FILE_NAME: The name of the file where you want to store logs, without any extension
+* MODE: **server** if you're running on Linux machine, **local** if running on local machine
 * URLS: [Array]
   * `BASE_URL`: The base url for the app you want to test, including the NGINX route (eg. https://example.com/my-app)
   * `PATH`: The path for the app you want to test, everything after the base url (eg. /users/myUser/)
@@ -32,6 +34,7 @@ Make changes to config.json file.
   "IP": "127.0.0.1",
   "PORT": 9000,
   "OUTPUT_FILE_NAME": "output",
+  "MODE": "server",
   "URLS": [
     {
       "BASE_URL": "https://myhappynation.in/calculators",
@@ -63,7 +66,10 @@ npm start
 _**For Production**_
 
 ```sh
-pm2 start healthCheck.js
+sudo apt-get install chromium-browser
+cd url-health-checker
+npm i
+pm2 start healthCheck.js --name url-health-checker
 ```
 
 ## Usage
