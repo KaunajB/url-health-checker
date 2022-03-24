@@ -21,10 +21,10 @@ const endLine =
 
 const puppeteerOptions = {
   devtools: true,
-  headless: true,
-  args: ["--no-sandbox"]
+  headless: true
 };
 if (config.MODE === "server") {
+  puppeteerOptions.args = ["--no-sandbox"];
   puppeteerOptions.executablePath = "/usr/bin/chromium-browser";
 }
 
