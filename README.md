@@ -21,6 +21,7 @@ npm i
 Make changes to config.json file.
 * IP: IP Address for starting the server
 * PORT: Port on which the server should listen
+* OUTPUT_FILE_NAME: The name of the file where you want to store logs, without any extension
 * URLS: [Array]
   * `BASE_URL`: The base url for the app you want to test, including the NGINX route (eg. https://example.com/my-app)
   * `PATH`: The path for the app you want to test, everything after the base url (eg. /users/myUser/)
