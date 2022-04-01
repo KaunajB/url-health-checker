@@ -29,27 +29,26 @@ if (config.MODE === "server") {
 }
 
 app.get("/", (req, res) => {
-  res.send("status ok");
-  // let logOutput = `[ ${new Date().toLocaleString()} ]\n`;
-  // Promise.all(config.URLS.map((url) => checkUrl(url)))
-  //   .then((results) => {
-  //     logOutput += results.join("\n");
-  //     logOutput += endLine;
-  //     log(logOutput);
-  //     return res.send(`<pre>${logOutput}</pre>`);
-  //   })
-  //   .catch((e) => {
-  //     console.log("error", e);
-  //     try {
-  //       JSON.parse(e);
-  //       logOutput += "\n" + JSON.stringify(e);
-  //     } catch (err) {
-  //       logOutput += "\n" + e;
-  //     }
-  //     logOutput += endLine;
-  //     log(logOutput);
-  //     return res.send(`<pre>${logOutput}</pre>`);
-  //   });
+  let logOutput = `[ ${new Date().toLocaleString()} ]\n`;
+  Promise.all(config.URLS.map((url) => checkUrl(url)))
+    .then((results) => {
+      logOutput += results.join("\n");
+      logOutput += endLine;
+      log(logOutput);
+      return res.send(`<pre>${logOutput}</pre>`);
+    })
+    .catch((e) => {
+      console.log("error", e);
+      try {
+        JSON.parse(e);
+        logOutput += "\n" + JSON.stringify(e);
+      } catch (err) {
+        logOutput += "\n" + e;
+      }
+      logOutput += endLine;
+      log(logOutput);
+      return res.send(`<pre>${logOutput}</pre>`);
+    });
 });
 
 app.get("/url", (req, res) => {

@@ -2,7 +2,7 @@
   "IP": "127.0.0.1",
   "PORT": 9000,
   "OUTPUT_FILE_NAME": "output",
-  "MODE": "server",
+  "MODE": "local",
   "URLS": [
     {
       "BASE_URL": "https://myhappynation.in/calculators",
