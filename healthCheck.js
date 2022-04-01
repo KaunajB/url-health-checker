@@ -19,11 +19,48 @@ const ipaddress = config.IP || "127.0.0.1";
 const endLine =
   "\n\n=====================================================================================================================\n";
 
+const puppeteerOptions = {
+  devtools: true,
+  headless: true
+};
+if (config.MODE === "server") {
+  puppeteerOptions.args = ["--no-sandbox"];
+  puppeteerOptions.executablePath = "/usr/bin/chromium-browser";
+}
+
 app.get("/", (req, res) => {
+  res.send("status ok");
+  // let logOutput = `[ ${new Date().toLocaleString()} ]\n`;
+  // Promise.all(config.URLS.map((url) => checkUrl(url)))
+  //   .then((results) => {
+  //     logOutput += results.join("\n");
+  //     logOutput += endLine;
+  //     log(logOutput);
+  //     return res.send(`<pre>${logOutput}</pre>`);
+  //   })
+  //   .catch((e) => {
+  //     console.log("error", e);
+  //     try {
+  //       JSON.parse(e);
+  //       logOutput += "\n" + JSON.stringify(e);
+  //     } catch (err) {
+  //       logOutput += "\n" + e;
+  //     }
+  //     logOutput += endLine;
+  //     log(logOutput);
+  //     return res.send(`<pre>${logOutput}</pre>`);
+  //   });
+});
+
+app.get("/url", (req, res) => {
   let logOutput = `[ ${new Date().toLocaleString()} ]\n`;
-  Promise.all(config.URLS.map((url) => checkUrl(url)))
+  checkUrl({
+    "BASE_URL": req.query.base,
+    "PATH": req.query.path,
+    "BOT_HEALTH_CHECK": (req.query.bot === "true")
+  })
     .then((results) => {
-      logOutput += results.join("\n");
+      logOutput += results;
       logOutput += endLine;
       log(logOutput);
       return res.send(`<pre>${logOutput}</pre>`);
@@ -47,10 +84,7 @@ function checkUrl(url) {
     try {
       console.log("URL", url);
       let output = `\nURL :\n${url.BASE_URL + url.PATH}\nBACKEND :`;
-      const browser = await puppeteer.launch({
-        devtools: true,
-        headless: true,
-      });
+      const browser = await puppeteer.launch(puppeteerOptions);
       const page = await browser.newPage();
 
       page
@@ -80,7 +114,7 @@ function checkUrl(url) {
       if (url.BOT_HEALTH_CHECK) {
         await page.goto(url.BASE_URL + "/healthCheck");
       }
-      await page.goto(url.BASE_URL + url.PATH);
+      await page.goto(url.BASE_URL + url.PATH, { waitUntil: 'load', timeout: 0 });
       return resolve(output);
     } catch (e) {
       console.log(e);
